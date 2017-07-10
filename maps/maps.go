@@ -32,8 +32,11 @@ func GetValueByKeyHandler(w http.ResponseWriter, r *http.Request) {
 
 	if value, ok := Maps[m.Key]; ok {
 		common.Render.JSON(w, 200, value)
+		return
+
 	} else {
 		common.Render.JSON(w, http.StatusBadRequest, map[string]string{"error": "key does not exist"})
+		return
 	}
 }
 
@@ -50,6 +53,7 @@ func PostValueByKeyHandler(w http.ResponseWriter, r *http.Request) {
 	Maps[m.Key] = m.Value
 
 	common.Render.JSON(w, 201, m)
+	return
 }
 
 func DeleteValueByKeyHandler(w http.ResponseWriter, r *http.Request) {
@@ -65,8 +69,10 @@ func DeleteValueByKeyHandler(w http.ResponseWriter, r *http.Request) {
 	if _, ok := Maps[m.Key]; ok {
 		delete(Maps, m.Key)
 		common.Render.JSON(w, 204, map[string]string{"deleted": m.Key})
+		return
 	} else {
 		common.Render.JSON(w, http.StatusBadRequest, map[string]string{"error": "key does not exist"})
+		return
 	}
 }
 func GetValueByMapKeyHandler(w http.ResponseWriter, r *http.Request) {
@@ -83,12 +89,14 @@ func GetValueByMapKeyHandler(w http.ResponseWriter, r *http.Request) {
 		if _, ok := value[m.MapKey]; ok {
 			Maps[m.Key][m.MapKey] = m.MapValue
 			common.Render.JSON(w, 200, value)
+			return
 		} else {
 			common.Render.JSON(w, http.StatusBadRequest, map[string]string{"error": "map key does not exist"})
-
+			return
 		}
 	} else {
 		common.Render.JSON(w, http.StatusBadRequest, map[string]string{"error": "key does not exist"})
+		return
 	}
 }
 
@@ -105,6 +113,7 @@ func PostMapValueByMapKeyHandler(w http.ResponseWriter, r *http.Request) {
 	Maps[m.Key][m.MapKey] = m.MapValue
 
 	common.Render.JSON(w, 201, m)
+	return
 }
 
 func DeletePopValueByKeyHandler(w http.ResponseWriter, r *http.Request) {
@@ -121,11 +130,13 @@ func DeletePopValueByKeyHandler(w http.ResponseWriter, r *http.Request) {
 		if _, ok := value[m.MapKey]; ok {
 			delete(Maps[m.Key], m.MapKey)
 			common.Render.JSON(w, 204, map[string]string{"deleted": m.Key})
+			return
 		} else {
 			common.Render.JSON(w, http.StatusBadRequest, map[string]string{"error": "map key does not exist"})
-
+			return
 		}
 	} else {
 		common.Render.JSON(w, http.StatusBadRequest, map[string]string{"error": "key does not exist"})
+		return
 	}
 }

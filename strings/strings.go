@@ -8,8 +8,8 @@ import (
 )
 
 type strings struct {
-	Key   string
-	Value string
+	Key   string `json:",omitempty"`
+	Value string `json:",omitempty"`
 }
 
 var Strings map[string]string
@@ -31,8 +31,10 @@ func GetValueByKeyHandler(w http.ResponseWriter, r *http.Request) {
 
 	if value, ok := Strings[s.Key]; ok {
 		common.Render.JSON(w, 200, value)
+		return
 	} else {
 		common.Render.JSON(w, http.StatusBadRequest, map[string]string{"error": "key does not exist"})
+		return
 	}
 }
 
@@ -49,7 +51,7 @@ func PostValueByKeyHandler(w http.ResponseWriter, r *http.Request) {
 	Strings[s.Key] = s.Value
 
 	common.Render.JSON(w, 201, s)
-
+	return
 }
 
 func DeleteValueByKeyHandler(w http.ResponseWriter, r *http.Request) {
@@ -65,7 +67,9 @@ func DeleteValueByKeyHandler(w http.ResponseWriter, r *http.Request) {
 	if _, ok := Strings[s.Key]; ok {
 		delete(Strings, s.Key)
 		common.Render.JSON(w, 204, map[string]string{"deleted": s.Key})
+		return
 	} else {
 		common.Render.JSON(w, http.StatusBadRequest, map[string]string{"error": "key does not exist"})
+		return
 	}
 }

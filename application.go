@@ -9,7 +9,7 @@ import (
 	"./search"
 	"./strings"
 
-	"github.com/gorilla/mux"
+	"../../../github.com/gorilla/mux"
 )
 
 func IndexHandler(w http.ResponseWriter, r *http.Request) {
@@ -46,5 +46,6 @@ func main() {
 	r.HandleFunc("/api/v1/maps/mapdelete", maps.DeletePopValueByKeyHandler).Methods("DELETE")
 
 	// Bind to a port and pass our router in
+	log.Println("init finished, listening.....")
 	log.Fatal(http.ListenAndServe(":8000", r))
 }

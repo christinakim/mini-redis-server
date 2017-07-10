@@ -10,7 +10,7 @@ import (
 type lists struct {
 	Key    string   `json:",omitempty"`
 	Value  []string `json:",omitempty"`
-	Append string
+	Append string   `json:",omitempty"`
 }
 
 var Lists map[string][]string
@@ -32,8 +32,10 @@ func GetValueByKeyHandler(w http.ResponseWriter, r *http.Request) {
 
 	if value, ok := Lists[l.Key]; ok {
 		common.Render.JSON(w, 200, value)
+		return
 	} else {
 		common.Render.JSON(w, http.StatusBadRequest, map[string]string{"error": "key does not exist"})
+		return
 	}
 }
 
@@ -50,6 +52,7 @@ func PostValueByKeyHandler(w http.ResponseWriter, r *http.Request) {
 	Lists[l.Key] = l.Value
 
 	common.Render.JSON(w, 201, l)
+	return
 }
 
 func DeleteValueByKeyHandler(w http.ResponseWriter, r *http.Request) {
@@ -67,6 +70,7 @@ func DeleteValueByKeyHandler(w http.ResponseWriter, r *http.Request) {
 		common.Render.JSON(w, 204, map[string]string{"deleted": l.Key})
 	} else {
 		common.Render.JSON(w, http.StatusBadRequest, map[string]string{"error": "key does not exist"})
+		return
 	}
 }
 
@@ -108,7 +112,9 @@ func DeletePopValueByKeyHandler(w http.ResponseWriter, r *http.Request) {
 		//reassigning to new value
 		Lists[l.Key] = value
 		common.Render.JSON(w, 204, map[string]string{"deleted": l.Key})
+		return
 	} else {
 		common.Render.JSON(w, http.StatusBadRequest, map[string]string{"error": "key does not exist"})
+		return
 	}
 }

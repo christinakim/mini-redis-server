@@ -2,7 +2,9 @@
 package common
 
 import (
-	"github.com/unrolled/render"
+	"../../../../github.com/unrolled/render"
 )
 
 var Render = render.New()
+
+var Keys map[string]string
