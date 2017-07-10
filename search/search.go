@@ -21,8 +21,7 @@ func GetSearchHandler(w http.ResponseWriter, r *http.Request) {
 	regex, err := regexp.Compile(".*" + query + " .*")
 
 	if err != nil {
-		common.Render.JSON(w, 500, "")
-
+		common.Render.JSON(w, 500, map[string]string{"error": err.Error()})
 	}
 
 	var results []string
