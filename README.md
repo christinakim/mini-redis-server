@@ -1,11 +1,11 @@
 # mini-redis-server
 
-##How to run application 
+## How to run application 
 1) go get github.com/christinakim/mini-redis-server
 2) cd into application
 3) to start the application `go run application`
 
-##How to use application 
+## How to use application 
 
 Example of `String SET`: 
  `curl -H "Content-Type: application/json" -X POST -d '{"key":"one","value":"1"}' http://localhost:8000/api/v1/strings/set`
